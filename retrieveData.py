@@ -18,8 +18,9 @@ query = input("Search: ")
 query_params = {
     'offset':0,
     'query': query,
+    'year': '2020-',
     'limit': 100,
-    'fields': 'title,year,abstract,authors.name,url,externalIds,s2FieldsOfStudy,publicationTypes,publicationDate'
+    'fields': 'title,year,abstract,authors.name,url,journal,externalIds,s2FieldsOfStudy,publicationTypes,publicationDate'
 }
 
 # Define headers with API key
@@ -64,7 +65,7 @@ if search_response.status_code == 200:
     search_response = search_response.json()    
     
     if search_response["total"] >= 1000:
-        for page in range(4):   # this will query 500 results
+        for page in range(1):   # this will query 500 results
             # get next page        
             next_response = call_next()
             search_response["data"]= search_response["data"] + next_response["data"]
