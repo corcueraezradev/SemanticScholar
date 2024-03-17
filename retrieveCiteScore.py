@@ -7,24 +7,22 @@ Created on Sat Mar 16 11:42:38 2024
 
 import requests
 from pprint import pprint
-from environment import api_key
+from environment import api_key, scopus_api_key
 
 # Define the paper search endpoint URL
-url = 'https://api.semanticscholar.org/graph/v1/paper/search'
+url = 'http://api.elsevier.com/content/serial/title'
 
 query = input("Search: ")
 
 # Define the required query parameter and its value (in this case, the keyword we want to search for)
 query_params = {
-    'offset':0,
-    'query': query,
-    'year': '2020-',
-    'limit': 10,
-    'fields': 'title,year,abstract,authors.name,url,journal,externalIds,s2FieldsOfStudy,publicationTypes,publicationDate'
+    'title': 'Advances in Therapy',
+    # 'issn': '0309-0566',
+    'view': 'STANDARD'
 }
 
 # Define headers with API key
-headers = {'x-api-key': api_key}
+headers = {'X-ELS-APIKey': scopus_api_key}
 
 # Define a separate function to make a request to the paper details endpoint using a paper_id. This function will be used later on (after we call the paper search endpoint).
 def get_paper_data(paper_id):
@@ -64,11 +62,11 @@ search_response = requests.get(url, params=query_params, headers=headers)
 if search_response.status_code == 200:
     search_response = search_response.json()    
     
-    if search_response["total"] >= 1000:
-        for page in range(1):   # this will query 500 results
-            # get next page        
-            next_response = call_next()
-            search_response["data"]= search_response["data"] + next_response["data"]
+    # if search_response["total"] >= 1000:
+    #     for page in range(1):   # this will query 500 results
+    #         # get next page        
+    #         next_response = call_next()
+    #         search_response["data"]= search_response["data"] + next_response["data"]
             
    
 
