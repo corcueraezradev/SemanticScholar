@@ -17,7 +17,7 @@ query = input("Search: ")
 # Define the required query parameter and its value (in this case, the keyword we want to search for)
 query_params = {
     'query': query,
-    'limit': 101
+    'limit': 100
 }
 
 # Directly define the API key (Reminder: Securely handle API keys in production environments)

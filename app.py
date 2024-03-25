@@ -24,11 +24,11 @@ query_params = {
     'offset':0,
     'query': query,
     'year': '2020-',
-    'limit': 10,
-    'fields': 'title,year,abstract,authors.name,url,journal,externalIds,s2FieldsOfStudy,publicationTypes,publicationDate'
+    'limit': 50,
+    'fields': 'title,year,abstract,authors.name,url,journal,externalIds,s2FieldsOfStudy,publicationTypes,publicationDate,referenceCount,citationCount,influentialCitationCount'
 }
 
-if st.button('Submit', key = "query_button"):
+if st.button('Submit', key = "query_button") and query!='':
     
     # Initial            
     # Make the GET request to the paper search endpoint with the URL and query parameters
@@ -53,10 +53,14 @@ if st.button('Submit', key = "query_button"):
                 
             st.write("---")  
             st.markdown(paper["title"])  
-            st.caption(authorsList) 
-            st.caption("DOI:" + paper["externalIds"]["DOI"])
-            st.caption(paper["year"])
-            st.caption(paper["url"])
+            # st.caption(authorsList) 
+            # st.caption("DOI:" + paper["externalIds"]["DOI"])
+            # st.caption(paper["year"])
+            st.caption("Citation Count: " + str(paper["citationCount"]))
+            st.caption("Influential Citation Count" + str(paper["influentialCitationCount"]))
+            # st.caption(paper["referenceCount"]+paper["citationCount"]+paper["influentialCitationCount"])
+            st.caption("SmartScore: " + str(paper["citationCount"]+paper["influentialCitationCount"]))
+            # st.caption(paper["url"])
                           
                 
              
